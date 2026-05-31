@@ -6,9 +6,9 @@ use crate::util::{bash, has_binary, run_shell};
 
 const BREW_INSTALL: &str = r#"/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)""#;
 const ZSHRC_URL: &str =
-    "https://raw.githubusercontent.com/florianblaschke/mac-setup/main/configs/.zshrc";
+    "https://raw.githubusercontent.com/florianblaschke/setup/main/configs/.zshrc";
 const P10K_URL: &str =
-    "https://raw.githubusercontent.com/florianblaschke/mac-setup/main/configs/.p10k.zsh";
+    "https://raw.githubusercontent.com/florianblaschke/setup/main/configs/.p10k.zsh";
 
 pub fn run() -> Result<()> {
     let theme = ColorfulTheme::default();

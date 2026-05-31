@@ -5,7 +5,6 @@ mod util;
 use anyhow::Result;
 use clap::{Parser, Subcommand};
 
-/// Interactive macOS setup CLI – Rust port of the original bash scripts.
 #[derive(Parser)]
 #[command(name = "mac-setup", version, about)]
 struct Cli {
