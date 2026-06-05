@@ -25,15 +25,16 @@ pub fn run() -> Result<()> {
         .default(true)
         .interact()?
     {
-        sh("ssh-keygen", &["-t", "ed25519", "-C", &email])?;
+        let home = std::env::var("HOME")?;
+        run_shell("mkdir -p ~/.ssh")?;
+        sh("ssh-keygen", &["-t", "ed25519", "-C", &email, "-f", &format!("{}/.ssh/id_ed25519", home), "-N", ""])?;
         run_shell(r#"eval "$(ssh-agent -s)""#)?;
 
-        let home = std::env::var("HOME")?;
         let ssh_config = format!("{home}/.ssh/config");
         run_shell(&format!(
             r#"printf '%s\n' 'Host *' '    AddKeysToAgent yes' '    UseKeychain yes' '    IdentityFile ~/.ssh/id_ed25519' > {ssh_config}"#
         ))?;
-        sh("ssh-add", &["--apple-use-keychain", "~/.ssh/id_ed25519"])?;
+        sh("ssh-add", &["--apple-use-keychain", &format!("{}/.ssh/id_ed25519", home)])?;
         run_shell("ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts")?;
     }
 

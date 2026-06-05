@@ -21,6 +21,7 @@ pub fn run() -> Result<()> {
             .interact()?
         {
             run_shell(BREW_INSTALL)?;
+            run_shell(r#"eval "$(/opt/homebrew/bin/brew shellenv)""#)?;
         }
     } else {
         println!("✓ Homebrew already installed, skipping.");
@@ -48,8 +49,8 @@ pub fn run() -> Result<()> {
         .interact()?
     {
         let home = std::env::var("HOME")?;
-        run_shell(&format!("curl -s {ZSHRC_URL} > {home}/.zshrc"))?;
-        run_shell(&format!("curl -s {P10K_URL} > {home}/.p10k.zsh"))?;
+        run_shell(&format!("curl -sL {ZSHRC_URL} > {home}/.zshrc"))?;
+        run_shell(&format!("curl -sL {P10K_URL} > {home}/.p10k.zsh"))?;
     }
 
     Ok(())
